@@ -1,0 +1,26 @@
+{
+  "author": "Suraj Jain",
+
+  "manifest_version": 2,
+  "name": "Dictionary Anywhere",
+  "version": "0.2",
+
+  "description": "View definitions easily as you browse the web. Double-click any word to view its definition in a small pop-up bubble.",
+
+  "icons": {
+    "48": "icons/Dictionary-48.png",
+    "96": "icons/Dictionary-96.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dictionary.js"]
+    }
+  ],
+
+  "permissions": [
+    "https://www.google.com/"
+  ]
+
+}
