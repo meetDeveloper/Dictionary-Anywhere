@@ -64,8 +64,13 @@
               return noMeaningFound(createdDiv);
             }
             var word = document.querySelectorAll("[data-dobid='hdw']")[0].textContent;
-            var meaning = document.querySelectorAll(".PNlCoe [data-dobid='dfn'] span")[0].textContent;
-            //console.log(word, meaning);
+            var meaning = "";
+
+            document.querySelector(".PNlCoe [data-dobid='dfn']").querySelectorAll("span").forEach(function(span){
+            	if(!span.querySelector("sup"))
+             		meaning = meaning + span.textContent;
+            })
+            meaning = meaning[0].toUpperCase() + meaning.substring(1);
             appendToDiv(createdDiv, {word: word, meaning: meaning});
         };
         return retrieveMeaning;
@@ -110,8 +115,14 @@
         meaning.style = "margin-top: 10px";
         meaning.textContent = "Please Wait...";
 
+        var moreInfo =document.createElement("a");
+        moreInfo.href = "https://www.google.com/search?q=define+" + info.word;
+        moreInfo.style = "float: right; text-decoration: none;"
+        moreInfo.target = "_blank";
+
         content.appendChild(heading);
         content.appendChild(meaning);
+        content.appendChild(moreInfo);
         document.body.appendChild(hostDiv);
 
         if(info.clientY < window.innerHeight/2){
@@ -128,7 +139,7 @@
             }
         }
 
-        return {heading: heading, meaning: meaning};
+        return {heading: heading, meaning: meaning, moreInfo: moreInfo};
 
     }
 
@@ -147,6 +158,7 @@
 
         createdDiv.heading.textContent = content.word;
         createdDiv.meaning.textContent = content.meaning;
+        createdDiv.moreInfo.textContent = "More »";
 
         var heightAfter = popupDiv.clientHeight;
         var difference = heightAfter - heightBefore;
