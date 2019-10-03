@@ -66,7 +66,7 @@
             var word = document.querySelectorAll("[data-dobid='hdw']")[0].textContent;
             var meaning = "";
 
-            document.querySelector(".PNlCoe [data-dobid='dfn']").querySelectorAll("span").forEach(function(span){
+            document.querySelector("[data-dobid='dfn']").querySelectorAll("span").forEach(function(span){
             	if(!span.querySelector("sup"))
              		meaning = meaning + span.textContent;
             })
