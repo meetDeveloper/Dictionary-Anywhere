@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dictionary Anywhere - Extension Options</title>
+    <link rel="stylesheet" type="text/css" href="./options.css">
+  </head>
+  <body>
+    <div id="content">
+      <div id="title">
+        <div>Extension Options</div>
+      </div>
+      <form name="options-form" action="">
+        <div class="option-row">
+          <div class="option-name">My language:</div>
+          <div class="option-value">
+            <div class="option-value-primary">
+              <select id="language-selector">
+                <option value="en">English (US)</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="option-row">
+          <div class="option-name">Pop-up definitions:</div>
+          <div class="option-value">
+            <div class="option-value-primary">
+              <label for="popup-dblclick-checkbox">
+                Display pop-up when I double-click a word
+              </label>
+            </div>
+            <div class="option-value-secondary">
+              <span id="popup-dblclick-text">Trigger key:</span>
+              <select name="popup-dblclick-key" id="popup-dblclick-key">
+                <option value="none">None</option>
+                <option value="alt">Alt</option>
+                <option value="shift">Shift</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="option-row">
+          <div class="option-name">Word history:</div>
+          <div class="option-value">
+            <div class="option-value-primary">
+              <input type="checkbox" name="store-history-checkbox"
+                     id="store-history-checkbox">
+              <label for="store-history-checkbox">
+                Store words I look up, including definitions
+              </label>
+            </div>
+            <div class="option-value-secondary">
+              Number of words stored in history:
+              <span id="num-words-in-history">0</span>
+            </div>
+            <div class="option-value-primary">
+              <button id="download-history-btn" class="btn btn-default">
+                Download history
+              </button>
+              <a href="#" id="download-history-link"
+                 download="DictionaryAnywhere.txt">
+              </a>
+              <button id="clear-history-btn" class="btn btn-default">
+                  Clear history
+                </button>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button id="save-btn" class="btn btn-primary">Save</button>
+          <button id="reset-btn" class="btn btn-default">Reset</button>
+          <span id="save-status">Options saved</span>
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript" src="./options.js"></script>
+  </body>
+</html>
