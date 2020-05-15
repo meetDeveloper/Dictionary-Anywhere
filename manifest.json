@@ -10,7 +10,8 @@
   "icons": {
     "48": "icons/Dictionary-48.png",
     "64": "icons/Dictionary-64.png",
-    "96": "icons/Dictionary-96.png"
+    "96": "icons/Dictionary-96.png",
+    "128": "icon_128.png"
   },
 
   "options_ui": {
