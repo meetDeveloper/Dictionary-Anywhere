@@ -1,19 +1,23 @@
-    var createdDiv,
-
-        LANGUAGE = 'en',
+    var LANGUAGE = 'en',
         TRIGGER_KEY = 'none',
         IS_HISTORY_ENABLED = true,
 
         GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize';
 
-    
-    function showMeaning(event){
-        var info = getSelectionInfo(event);
-        if(!info){
-            return;
-        }
+    function showMeaning (event){
+        var createdDiv,
+            info = getSelectionInfo(event);
 
-        sendRequest(info);
+        if (!info) { return; }
+
+        retrieveMeaning(info)
+            .then((response) => {                
+                if (!response.content) { return noMeaningFound(createdDiv); }
+
+                appendToDiv(createdDiv, response.content);
+            });
+
+        // Creating this div while we are fetching meaning to make extension more fast.
         createdDiv = createDiv(info);
     }
 
@@ -21,7 +25,6 @@
     function getSelectionInfo(event) {
         var word;
         var boundingRect;
-        var ifZero = {};
 
         if (window.getSelection().toString().length > 1) {
             word = window.getSelection().toString();
@@ -30,17 +33,17 @@
             return null;
         }
 
-        var top = boundingRect.top + window.scrollY;
-        var bottom = boundingRect.bottom + window.scrollY;
-        var left = boundingRect.left + window.scrollX;
+        var top = boundingRect.top + window.scrollY,
+            bottom = boundingRect.bottom + window.scrollY,
+            left = boundingRect.left + window.scrollX;
 
-        if(boundingRect.height == 0){
+        if (boundingRect.height == 0) {
             top = event.pageY;
             bottom = event.pageY;
             left = event.pageX;
         }
 
-        var toReturn = {
+        return {
             top: top,
             bottom: bottom,
             left: left,
@@ -49,74 +52,15 @@
             height: boundingRect.height,
             width: boundingRect.width
         };
-
-      return toReturn;
     }
 
-    function sendRequest(info){
-
-        var url = `https://www.google.com/search?hl=${LANGUAGE}&q=define+${info.word}`
-        var xmlHTTP = new XMLHttpRequest();
-        xmlHTTP.responseType = 'document';
-        xmlHTTP.onload = createCallback();
-        xmlHTTP.open( "GET", url, true ); // true for asynchronous request
-        xmlHTTP.send();
+    function retrieveMeaning(info){
+        return browser.runtime.sendMessage({ word: info.word, lang: LANGUAGE, time: Date.now() });
     }
-
-    function createCallback(){
-        var retrieveMeaning = function(){
-            var document = this.responseXML;
-
-            if(!document.querySelectorAll("[data-dobid='hdw']")[0]){
-              return noMeaningFound(createdDiv);
-            }
-
-            var word = document.querySelectorAll("[data-dobid='hdw']")[0].textContent;
-            var definitionDiv = document.querySelector("div[data-dobid='dfn']");
-            var meaning = "";
-
-            if (definitionDiv) {
-                definitionDiv.querySelectorAll("span").forEach(function(span){
-                    if(!span.querySelector("sup"))
-                         meaning = meaning + span.textContent;
-                });
-            }
-
-            meaning = meaning[0].toUpperCase() + meaning.substring(1);
-            var audio = document.querySelector("audio[jsname='QInZvb']");
-                source = document.querySelector("audio[jsname='QInZvb'] source"),
-                audioSrc = source && source.src;
-
-            if (audioSrc) {
-                !audioSrc.includes("http") && (audioSrc = audioSrc.replace("//", "https://"));
-            }
-            else if(audio){
-                let exactWord = word.replace(/·/g, ''), // We do not want syllable seperator to be present.
-                    
-                queryString = new URLSearchParams({
-                    text: exactWord, 
-                    enc: 'mpeg', 
-                    lang: LANGUAGE, 
-                    speed: '0.4', 
-                    client: 'lr-language-tts', 
-                    use_google_only_voices: 1
-                }).toString();
-
-                audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
-            }
-
-            let content = {word: word, meaning: meaning, audioSrc: audioSrc};
-
-            saveWord(content);
-            appendToDiv(createdDiv, content);
-        };
-        return retrieveMeaning;
-    }
-
 
     function createDiv(info) {
-
         var hostDiv = document.createElement("div");
+
         hostDiv.className = "dictionaryDiv";
         hostDiv.style.left = info.left -10 + "px";
         hostDiv.style.position = "absolute";
@@ -184,6 +128,7 @@
         } else {
             popupDiv.className = "mwe-popups flipped_y mwe-popups-is-not-tall";
             hostDiv.style.top = info.top - 10 - popupDiv.clientHeight + "px";
+
             if(info.height == 0){
                 hostDiv.style.top = parseInt(hostDiv.style.top) - 8 + "px";
             }
@@ -200,8 +145,12 @@
             }
         }
 
-        return {heading: heading, meaning: meaning, moreInfo: moreInfo, audio: audio};
-
+        return { 
+            heading, 
+            meaning, 
+            moreInfo, 
+            audio 
+        };
     }
 
     function getSelectionCoords(selection) {
@@ -211,7 +160,6 @@
     }
 
     function appendToDiv(createdDiv, content){
-
         var hostDiv = createdDiv.heading.getRootNode().host;
         var popupDiv = createdDiv.heading.getRootNode().querySelectorAll("div")[1];
 
@@ -238,7 +186,7 @@
         }
     }
 
-    function noMeaningFound(createdDiv){
+    function noMeaningFound (createdDiv){
       createdDiv.heading.textContent = "Sorry";
       createdDiv.meaning.textContent = "No definition found.";
     }
@@ -250,22 +198,6 @@
                 Node.remove();
             });
         }
-    }
-
-    function saveWord (content) {
-        let word = content.word,
-            meaning = content.meaning,
-          
-            storageItem = browser.storage.local.get('definitions');
-
-            storageItem.then((results) => {
-                let definitions = results.definitions || {};
-
-                definitions[word] = meaning;
-                browser.storage.local.set({
-                    definitions
-                });
-            })
     }
 
     document.addEventListener('dblclick', ((e) => {
