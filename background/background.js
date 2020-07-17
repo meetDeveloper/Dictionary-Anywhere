@@ -1,4 +1,4 @@
-const var GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize';
+const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize';
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { word, lang } = request, 
