@@ -1,9 +1,7 @@
     var LANGUAGE = 'en',
         TRIGGER_KEY = 'none',
-        IS_HISTORY_ENABLED = true,
-
-        GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize';
-
+        IS_HISTORY_ENABLED = true;
+        
     function showMeaning (event){
         var createdDiv,
             info = getSelectionInfo(event);
