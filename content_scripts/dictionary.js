@@ -1,7 +1,9 @@
-    var LANGUAGE = 'en',
-        TRIGGER_KEY = 'none',
-        IS_HISTORY_ENABLED = true;
-        
+    var DEFAULT_LANGUAGE = 'en',
+        DEFAULT_TRIGGER_KEY = 'none',
+
+        LANGUAGE,
+        TRIGGER_KEY;
+
     function showMeaning (event){
         var createdDiv,
             info = getSelectionInfo(event);
@@ -205,13 +207,9 @@
         let storageItem = browser.storage.local.get();
 
         storageItem.then((results) => {
-            let language = results.language,
-                interaction = results.interaction || {},
-                isHistoryEnabled = results.history;
+            let interaction = results.interaction || { dblClick: { key: DEFAULT_TRIGGER_KEY }};
 
-            
-            language && (LANGUAGE = language);
-            (interaction.dblClick && interaction.dblClick.key) && (TRIGGER_KEY = interaction.dblClick.key);
-            results.hasOwnProperty(isHistoryEnabled) && (IS_HISTORY_ENABLED = isHistoryEnabled);
+            LANGUAGE = results.language || DEFAULT_LANGUAGE;
+            TRIGGER_KEY = interaction.dblClick.key;
         });
     })();

@@ -33,7 +33,7 @@ function saveOptions(e) {
     storageItem.then((results) => {
         let language = results.language,
             interaction = results.interaction || {},
-            history = results.history || {},
+            history = results.history || { enabled: IS_HISTORY_ENABLED_BY_DEFAULT },
             definitions = results.definitions || {};
         
         // language
@@ -47,7 +47,7 @@ function saveOptions(e) {
         // document.querySelector("#popup-select-key").value = interaction.select.key;
 
         // history
-        document.querySelector("#store-history-checkbox").checked = history.enabled || IS_HISTORY_ENABLED_BY_DEFAULT;
+        document.querySelector("#store-history-checkbox").checked = history.enabled;
         document.querySelector("#num-words-in-history").innerText = Object.keys(definitions).length;
     });
   }

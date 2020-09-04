@@ -1,4 +1,8 @@
-const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize';
+const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
+
+    DEFAULT_HISTORY_SETTING = {
+        enabled: true
+    };
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { word, lang } = request, 
@@ -13,9 +17,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             const document = new DOMParser().parseFromString(text, 'text/html'),
                 content = extractMeaning(document, { word, lang });
 
-            if (content) { saveWord(content); }
-
             sendResponse({ content });
+
+            content && browser.storage.local.get().then((results) => {
+                let history = results.history || DEFAULT_HISTORY_SETTING;
+        
+                history.enabled && saveWord(content)
+            });
         })
 
     return true;
