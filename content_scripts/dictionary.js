@@ -63,7 +63,7 @@
         hostDiv.className = "dictionaryDiv";
         hostDiv.style.left = info.left -10 + "px";
         hostDiv.style.position = "absolute";
-        hostDiv.stye.zIndex = "1000000"
+        hostDiv.style.zIndex = "1000000"
         hostDiv.attachShadow({mode: 'open'});
 
         var shadow = hostDiv.shadowRoot;
