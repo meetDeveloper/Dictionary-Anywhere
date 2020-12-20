@@ -1,4 +1,4 @@
-let DEFAULT_LANGUAGE = 'en',
+const DEFAULT_LANGUAGE = 'en',
     DEFAULT_TRIGGER_KEY = 'none',
     IS_HISTORY_ENABLED_BY_DEFAULT = true,
 
@@ -8,7 +8,13 @@ let DEFAULT_LANGUAGE = 'en',
     RESET_OPTIONS_BUTTON = document.querySelector("#reset-btn"),
 
     CLEAR_HISTORY_BUTTON = document.querySelector("#clear-history-btn"),
-    DOWNLOAD_HISTORY_BUTTON = document.querySelector("#download-history-btn");
+    DOWNLOAD_HISTORY_BUTTON = document.querySelector("#download-history-btn"),
+
+    OS_MAC = 'mac',
+
+    KEY_COMMAND = 'Command',
+    KEY_META = 'meta';
+
 
 
 function saveOptions(e) {
@@ -118,3 +124,8 @@ function saveOptions(e) {
 
   SAVE_OPTIONS_BUTTON.addEventListener("click", saveOptions);
   RESET_OPTIONS_BUTTON.addEventListener("click", resetOptions);
+
+  if (window.navigator.platform.toLowerCase().includes(OS_MAC)) {
+    document.getElementById("popup-dblclick-key-ctrl").textContent = KEY_COMMAND;
+    document.getElementById("popup-dblclick-key-ctrl").value = KEY_META;
+  }
