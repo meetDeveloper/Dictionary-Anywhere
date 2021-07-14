@@ -40,6 +40,8 @@
 
   "permissions": [
     "storage",
+    "contextMenus",
+    "activeTab",
     "https://www.google.com/"
   ]
 }
