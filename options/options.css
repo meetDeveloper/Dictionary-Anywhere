@@ -3,7 +3,7 @@ body {
 }
 
 #content {
-	background-color: #fff;
+	background-color: #222;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	margin: 40px auto 0;
@@ -82,7 +82,7 @@ body {
 }
 
 body {
-	color: #222;
+	color: #fff;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px
 }
@@ -130,7 +130,7 @@ a:hover {
 .btn-default {
 	background-color: #eee;
 	border-color: #ccc;
-	color: #222
+	color: #fff
 }
 
 .btn-default:hover {
@@ -141,7 +141,7 @@ a:hover {
 .btn-primary {
 	background-color: #48e;
 	border-color: #37d;
-	color: #fff
+	color: #222
 }
 
 .btn-primary:hover {
