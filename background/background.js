@@ -85,3 +85,25 @@ function saveWord (content) {
             });
         })
 }
+
+browser.contextMenus.create({
+    id: "dictionary-anywhere-selection",
+    title: "Look up '%s' in Dictionary",
+    contexts: ["selection"]
+});
+
+browser.contextMenus.onClicked.addListener(function (info, tab) {
+    if (info.menuItemId === "dictionary-anywhere-selection") {
+        const code = `showMeaning({});`;
+
+        browser.tabs.executeScript({
+            code: "typeof showMeaning === 'function';",
+        }).then(() => {
+            return browser.tabs.executeScript(tab.id, {
+                code,
+            });
+        }).catch((error) => {
+            console.error("Failed to translate text: " + error);
+        });
+    }
+});
