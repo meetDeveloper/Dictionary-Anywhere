@@ -148,13 +148,27 @@
         return oRect;
     }
 
+    function meaningArrayToParagraphList(meaningArray) {
+        var meaningList = document.createElement("ul");
+        meaningList.style = "margin-top: 0px; margin-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;";
+        meaningArray.forEach(function(meaning) {
+            var meaningItem = document.createElement("li");
+            meaningItem.style = "margin-block-start: 0px; margin-block-end: 0px; display: list-item;";
+            meaningItem.textContent = meaning;
+            meaningList.appendChild(meaningItem);
+        }); 
+        return meaningList;
+    }
+
+
     function appendToDiv(createdDiv, content){
         var hostDiv = createdDiv.heading.getRootNode().host;
         var popupDiv = createdDiv.heading.getRootNode().querySelectorAll("div")[1];
 
         var heightBefore = popupDiv.clientHeight;
         createdDiv.heading.textContent = content.word;
-        createdDiv.meaning.textContent = content.meaning;
+        createdDiv.meaning.textContent = "";
+        createdDiv.meaning.appendChild(meaningArrayToParagraphList(content.meaningArray));
         createdDiv.moreInfo.textContent = "More »";
 
         var heightAfter = popupDiv.clientHeight;

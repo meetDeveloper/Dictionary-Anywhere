@@ -33,17 +33,24 @@ function extractMeaning (document, context) {
     if (!document.querySelector("[data-dobid='hdw']")) { return null; }
     
     var word = document.querySelector("[data-dobid='hdw']").textContent,
-        definitionDiv = document.querySelector("div[data-dobid='dfn']"),
-        meaning = "";
-
-    if (definitionDiv) {
-        definitionDiv.querySelectorAll("span").forEach(function(span){
-            if(!span.querySelector("sup"))
-                 meaning = meaning + span.textContent;
-        });
+        definitionDivNodeList = document.querySelectorAll("div[data-dobid='dfn']"),
+        meaningArray = [];
+        
+    if(definitionDivNodeList) {
+        definitionDivNodeList.forEach((definitionDiv) => {
+            if (definitionDiv) {
+                definitionDiv.querySelectorAll("span").forEach( function(span) {
+                    if(!span.querySelector("sup")) {
+                        meaningArray.push(span.textContent);
+                    }
+                });
+            }
+        });  
     }
-
-    meaning = meaning[0].toUpperCase() + meaning.substring(1);
+        
+    for(var i = 0; i < meaningArray.length; i++) {
+        meaningArray[i] = meaningArray[i][0].toUpperCase() + meaningArray[i].substring(1);
+    }
 
     var audio = document.querySelector("audio[jsname='QInZvb']"),
         source = document.querySelector("audio[jsname='QInZvb'] source"),
@@ -67,7 +74,7 @@ function extractMeaning (document, context) {
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
 
-    return { word: word, meaning: meaning, audioSrc: audioSrc };
+    return { word: word, meaningArray: meaningArray, audioSrc: audioSrc };
 };
 
 function saveWord (content) {
