@@ -39,13 +39,15 @@ function extractMeaning (document, context) {
     if(definitionDivNodeList) {
         definitionDivNodeList.forEach((definitionDiv) => {
             if (definitionDiv) {
+                var meaning = ""
                 definitionDiv.querySelectorAll("span").forEach( function(span) {
                     if(!span.querySelector("sup")) {
-                        meaningArray.push(span.textContent);
+                        meaning = meaning + span.textContent;
                     }
                 });
+                meaningArray.push(meaning);
             }
-        });  
+        });
     }
         
     for(var i = 0; i < meaningArray.length; i++) {
