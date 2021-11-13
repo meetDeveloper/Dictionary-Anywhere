@@ -81,14 +81,14 @@ function extractMeaning (document, context) {
 
 function saveWord (content) {
     let word = content.word,
-        meaning = content.meaning,
+        meaningArray = content.meaningArray,
       
         storageItem = browser.storage.local.get('definitions');
 
         storageItem.then((results) => {
             let definitions = results.definitions || {};
 
-            definitions[word] = meaning;
+            definitions[word] = meaningArray.join(' ');
             browser.storage.local.set({
                 definitions
             });
