@@ -1,0 +1,236 @@
+[33mcommit d8649f931cb52c82f43d1aaf3f4a55f42161b116[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: tao <generaltao.md@gmail.com>
+Date:   Sat Nov 13 20:01:09 2021 +0200
+
+    fix broken `saveWord`
+
+[33mcommit 572aed3bb32ab0cdefcc26fc7bf46034df319e25[m
+Author: Diulgher Artiom <42372666+GeneralTao2@users.noreply.github.com>
+Date:   Fri Nov 12 19:59:39 2021 +0200
+
+    fix mistake with `meaning` building
+
+[33mcommit 55bd396e4b75fc8c796fec1a21437457752f05c5[m
+Author: tao <generaltao.md@gmail.com>
+Date:   Fri Nov 12 19:28:18 2021 +0200
+
+    add several meanings result
+
+[33mcommit 50ad68b1da6a772a1cf41beda4f1ea181ddc5cc3[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Tue Aug 17 23:13:48 2021 +0530
+
+    Update README.md
+
+[33mcommit 81be174b8a5ee2697cc880b91b60842da5ef1685[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Tue Aug 17 23:12:09 2021 +0530
+
+    Update README.md
+
+[33mcommit 0c416734505ec025cfb003352acd80b062afbe9a[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Mon Dec 21 01:39:56 2020 +0530
+
+    Updated Extension to v1.1.0
+
+[33mcommit 19f517473b6070b011804f00ef505e7904f91e23[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Mon Dec 21 01:39:37 2020 +0530
+
+    Allowed user to choose Ctrl/Command keys as trigger key. Extension will detect user Operating System to show him relevant trigger keys.
+
+[33mcommit c9bf04ec1680df369436144d1504d653c4007734[m[33m ([m[1;33mtag: v1.0.10[m[33m)[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Fri Dec 4 23:17:29 2020 +0530
+
+    Updated Extension to v1.0.10
+
+[33mcommit f1a5fb0029bc7bff8b28558eaddd4f770ffa246d[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Fri Dec 4 23:15:40 2020 +0530
+
+    Fixed incorrect setting of zIndex property on hostDiv
+
+[33mcommit 6437fe52352d019d02c83566dcc071f44f8d9a25[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Fri Dec 4 23:01:46 2020 +0530
+
+    Updated Extension to v1.0.9
+
+[33mcommit fadec8335851c3edb01fa10fef27dc9400c0841c[m
+Merge: b48205a 650de40
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Thu Nov 26 11:01:28 2020 +0530
+
+    Merge pull request #33 from AxelDavid45/master
+    
+    Added ZIndex property to fix div hidden
+
+[33mcommit b48205a57a5cbcaa02dccea2c0a61ed70bead259[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Wed Nov 25 09:08:54 2020 +0530
+
+    Updated Extension to v1.0.8
+
+[33mcommit 94a2d956b6bd39c80c621bf016ec4e09bd4f82f9[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Wed Nov 25 09:06:56 2020 +0530
+
+    Fixed issue where definitions of word was not being parsed properly because google sends localized meaning, using gl (geolocation) query param to go around that
+
+[33mcommit 650de40eefe8dc7b3537a0651a8b5d82f5f03104[m
+Author: Axel David Espinosa Meneses <axeldavid45@gmail.com>
+Date:   Sun Oct 11 12:21:28 2020 -0500
+
+    ZIndex updated
+    
+    I updated the zindex value to keep it for sure always on top
+
+[33mcommit 8dddb0f9da901a5fad684e83cf4e11506c10fead[m
+Author: Axel David Espinosa Meneses <axeldavid45@gmail.com>
+Date:   Sat Oct 3 13:19:52 2020 -0500
+
+    Added ZIndex property to fix div hidden
+    
+    I added a Z-Index property to fix a problem in some websites where the div that contains the word information is hidden.
+    For example, in the Google Assistant Documentation, the div that contains the word information is under the information because of the z-index.
+
+[33mcommit 2f7f32a7bf780d783ad70ff4f0e6b147749b07a9[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Sat Sep 5 01:28:53 2020 +0530
+
+    Updated extension v1.0.7
+
+[33mcommit 8097b3c80b95bf775114a221705fa0fb1b380f23[m
+Author: Suraj Jain <suraj.jain@postman.com>
+Date:   Sat Sep 5 01:28:15 2020 +0530
+
+    Fixed history setting
+
+[33mcommit dcf2f559aa5719055d05b762da058f90610eba3a[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Sat Jul 18 00:57:15 2020 +0530
+
+    Updated extension v1.0.6
+
+[33mcommit e8400aad2ba923bba216b70bd70bf006e8e944ad[m
+Merge: b17bf48 6cd03a7
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Sat Jul 18 00:50:16 2020 +0530
+
+    Merge pull request #21 from slay2k/bugfix_undefined_URI
+    
+    Bugfix to move 'GOOGLE_SPEECH_URI' definition
+
+[33mcommit 6cd03a786d41c78b42b117620c849cedcc5b9624[m
+Author: Romy Maxwell <romy.maxwell@gmail.com>
+Date:   Fri Jul 17 14:50:34 2020 -0400
+
+    Typo
+
+[33mcommit 7395697205c5b874f2925364e74bb8edfb0a1ddf[m
+Author: Romy Maxwell <romy.maxwell@gmail.com>
+Date:   Fri Jul 17 14:49:19 2020 -0400
+
+    Adding const
+
+[33mcommit 5694c18ab9c037f541c512559d93f6debaf2a1ea[m
+Author: Romy Maxwell <romy.maxwell@gmail.com>
+Date:   Fri Jul 17 13:27:39 2020 -0400
+
+    Bugfix to move 'GOOGLE_SPEECH_URI' definition
+
+[33mcommit b17bf488b1f029070cdf765eeb4479fa6a6b46ad[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Fri Jul 10 22:48:07 2020 +0530
+
+    Updated extension to v1.0.5
+
+[33mcommit e1aea5229423dcd4b1e6a44c131ef7c622bb87d6[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Fri Jul 3 23:10:19 2020 +0530
+
+    Create FUNDING.yml
+
+[33mcommit 798c664175b75b366e59e8ec2ea88de0c1291aee[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Mon Jun 22 13:38:58 2020 +0530
+
+    Updated extension to v1.0.4
+
+[33mcommit e53e9b37f6f713f9b3d142047cc209cb621dc382[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Mon Jun 22 13:37:31 2020 +0530
+
+    Placed 128*128 px icon in icons folder and modified the manifest file to reflect the same
+
+[33mcommit 642bb59ccdf7fe006305ece021c8562bc833440f[m
+Merge: d994bf6 f85ced4
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Mon Jun 22 13:34:58 2020 +0530
+
+    Merge pull request #16 from chuaweijie/master
+    
+    Added Icon for Chrome Web Store Listing
+
+[33mcommit d994bf6ca4e5e7d873af68a74eb53ea734772fb0[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Wed Jun 17 15:24:40 2020 +0530
+
+    Updated extension to v1.0.3
+
+[33mcommit dc7ffb5e90e544e91abcb0e29d02b2745168c7ce[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Wed Jun 17 15:24:24 2020 +0530
+
+    Omitting credentials so that browser does not send or recieve cookies from other domain in case of cross-origin requests
+
+[33mcommit f85ced44f198e487e881d6fbee6562dd3c5e32f9[m
+Author: Chua Wei Jie <chuawei_jie@hotmail.com>
+Date:   Fri May 15 09:41:23 2020 +0700
+
+    Added Icon for Chrome Webstore Listing
+    
+    I've added icon_128.png at the root which is needed for the icon on Chrome Webstore. I've also updated the manifest.json to reflect this change.
+
+[33mcommit ec39e05dc67e45249da8f87a981242f954b44af5[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Thu Apr 9 07:56:53 2020 +0530
+
+    Added browser polyfill to support chrome based extension that instead of sending promise uses callback based approach
+
+[33mcommit f55fa9599ad8a3390cbd0c67654f2600e1c43df4[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Thu Apr 9 07:56:09 2020 +0530
+
+    Added background script to preform cross site requests
+
+[33mcommit f2841e7dbc585cc080ad77194b8138a0a28fcabb[m
+Author: meetDeveloper <srjjain1996@gmail.com>
+Date:   Sat Dec 14 12:40:49 2019 +0530
+
+    1. Added German, Spanish and French Languages.
+    2. Added support for storing words and meanings you have searched for and ability to retrieve them in a text file.
+    3. Added ability to add modifier key, so that modifier key + double click results in dictionary popup.
+
+[33mcommit 445773ce9b2688d7869c65956706ed27778ede4f[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Mon Dec 10 00:49:36 2018 +0530
+
+    Update README.md
+
+[33mcommit 895b7625fe5fd09a3e4729153d276761c2e0d737[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Mon Oct 8 23:05:57 2018 +0530
+
+    Updated Version...
+
+[33mcommit 3efff688e24a0cf6804d95fde2c7e30ceacd3a59[m
+Author: meetDeveloper <32453612+meetDeveloper@users.noreply.github.com>
+Date:   Mon Oct 8 23:05:08 2018 +0530
+
+     Added More Info Feature and Fixed Bugs.
+    
+    New Features:
+    A link has b
