@@ -4,14 +4,32 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
         enabled: true
     };
 
+function getContentOfSiteCrossOrigin (url) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                resolve(xhr.responseText);
+            } else {
+                reject(xhr.statusText);
+            }
+        };
+        xhr.onerror = () => {
+            reject(xhr.statusText);
+        };
+        xhr.send();
+    });
+}
+
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { word, lang } = request, 
-        url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
-    
+        url = makeLink(word, lang);
+
     fetch(url, { 
-            method: 'GET',
-            credentials: 'omit'
-        })
+        method: 'GET',
+        credentials: 'omit'
+    })
         .then((response) => response.text())
         .then((text) => {
             const document = new DOMParser().parseFromString(text, 'text/html'),
@@ -29,7 +47,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
-function extractMeaning (document, context) {
+function extractMeaningFromGoogle (document) {
     if (!document.querySelector("[data-dobid='hdw']")) { return null; }
     
     var word = document.querySelector("[data-dobid='hdw']").textContent,
@@ -39,7 +57,7 @@ function extractMeaning (document, context) {
     if(definitionDivNodeList) {
         definitionDivNodeList.forEach((definitionDiv) => {
             if (definitionDiv) {
-                var meaning = ""
+                var meaning = "";
                 definitionDiv.querySelectorAll("span").forEach( function(span) {
                     if(!span.querySelector("sup")) {
                         meaning = meaning + span.textContent;
@@ -53,6 +71,36 @@ function extractMeaning (document, context) {
     for(var i = 0; i < meaningArray.length; i++) {
         meaningArray[i] = meaningArray[i][0].toUpperCase() + meaningArray[i].substring(1);
     }
+    return { word: word, meaningArray: meaningArray };
+}
+
+function extractMeaningFromDoxonline (document) {
+    var targetSpan = document.querySelector(".def");
+    if (!targetSpan) { return null; }
+    
+    var word = targetSpan.querySelector("b").textContent.slice(0,-1),
+        meaningArray = [targetSpan.innerHTML];
+
+    if(meaningArray[0].length > 1000) {
+        meaningArray[0] = meaningArray[0].substr(0, 1000) + "...";
+    }
+
+    return { word: word, meaningArray: meaningArray };
+}
+
+
+function extractMeaning (document, context) {
+    var word,
+        meaningArray,
+        wordAndMeaningArray;
+    
+    if (context.lang === 'ro') {
+        wordAndMeaningArray = extractMeaningFromDoxonline(document);
+    } else {
+        wordAndMeaningArray = extractMeaningFromGoogle(document);
+    }
+    word = wordAndMeaningArray.word;
+    meaningArray = wordAndMeaningArray.meaningArray;
 
     var audio = document.querySelector("audio[jsname='QInZvb']"),
         source = document.querySelector("audio[jsname='QInZvb'] source"),

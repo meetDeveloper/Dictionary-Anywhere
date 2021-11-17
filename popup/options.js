@@ -18,6 +18,7 @@ const DEFAULT_LANGUAGE = 'en',
 
 
 function saveOptions(e) {
+    console.log(document.querySelector("#language-selector").value)
     browser.storage.local.set({
         language: document.querySelector("#language-selector").value,
         interaction: {
