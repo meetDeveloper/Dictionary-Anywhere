@@ -3,7 +3,7 @@
 
   "manifest_version": 2,
   "name": "Dictionary Anywhere",
-  "version": "1.1.0",
+  "version": "1.1.2",
 
   "description": "View definitions easily as you browse the web. Double-click any word to view its definition in a small pop-up bubble.",
 
@@ -14,16 +14,11 @@
     "128": "icons/Dictionary-128.png"
   },
 
-  "options_ui": {
-    "page": "options/options.html",
-    "browser_style": true,
-    "chrome_style": true
-  },
-
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": [
+        "common/dictionary-links.js",
         "common/browser-polyfill.js",
         "content_scripts/dictionary.js"
       ]
@@ -32,14 +27,27 @@
 
   "background": {
     "scripts": [
+      "common/dictionary-links.js",
       "common/browser-polyfill.js",
       "background/background.js"
     ],
     "persistent": false
   },
 
+  "browser_action": {
+    "default_icon": "icons/Dictionary-32.png",
+    "default_title": "Dictionary Anywhere",
+    "default_popup": "popup/options.html"
+  },
+
   "permissions": [
     "storage",
-    "https://www.google.com/"
-  ]
+    "https://www.google.com/",
+    "https://dexonline.ro/"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dictionary_anywrere_fork@tao.com"
+    }
+  }
 }
