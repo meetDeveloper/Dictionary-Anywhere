@@ -3,7 +3,7 @@ The **Dictionary Anywhere** extension helps you stay focused on what you are rea
 Double-clicking any word will view its definition in a small pop-up bubble. 
 Now you never have to leave what you are reading to search for the meaning of the words you don't yet know.
 
-Extension is available for [Google Chrome](https://chrome.google.com/webstore/detail/dictionary-anywhere/hcepmnlphdfefjddkgkblcjkbpbpemac/) and [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere).
+Extension is available for [Google Chrome](https://chrome.google.com/webstore/detail/dictionary-anywhere/hcepmnlphdfefjddkgkblcjkbpbpemac/) and [Mozilla Firefox](https://addons.mozilla.org/firefox/addon/dictionary-anyvhere).
 
 ##### Enjoy Reading Uninterrupted!!!
 
