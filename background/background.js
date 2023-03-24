@@ -8,7 +8,12 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { word, lang } = request, 
         url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
     
+    let headers = new Headers({
+                "User-Agent"   : "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0"
+     });
+    
     fetch(url, { 
+            headers, 
             method: 'GET',
             credentials: 'omit'
         })
