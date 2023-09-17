@@ -5,13 +5,13 @@ const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
     };
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const { word, lang } = request, 
+    const { word, lang } = request,
         url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
-    
-    fetch(url, { 
-            method: 'GET',
-            credentials: 'omit'
-        })
+
+    fetch(url, {
+        method: 'GET',
+        credentials: 'omit'
+    })
         .then((response) => response.text())
         .then((text) => {
             const document = new DOMParser().parseFromString(text, 'text/html'),
@@ -21,7 +21,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             content && browser.storage.local.get().then((results) => {
                 let history = results.history || DEFAULT_HISTORY_SETTING;
-        
+
                 history.enabled && saveWord(content)
             });
         })
@@ -29,17 +29,17 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
-function extractMeaning (document, context) {
+function extractMeaning(document, context) {
     if (!document.querySelector("[data-dobid='hdw']")) { return null; }
-    
+
     var word = document.querySelector("[data-dobid='hdw']").textContent,
         definitionDiv = document.querySelector("div[data-dobid='dfn']"),
         meaning = "";
 
     if (definitionDiv) {
-        definitionDiv.querySelectorAll("span").forEach(function(span){
-            if(!span.querySelector("sup"))
-                 meaning = meaning + span.textContent;
+        definitionDiv.querySelectorAll("span").forEach(function (span) {
+            if (!span.querySelector("sup"))
+                meaning = meaning + span.textContent;
         });
     }
 
@@ -54,15 +54,15 @@ function extractMeaning (document, context) {
     }
     else if (audio) {
         let exactWord = word.replace(/·/g, ''), // We do not want syllable seperator to be present.
-            
-        queryString = new URLSearchParams({
-            text: exactWord, 
-            enc: 'mpeg', 
-            lang: context.lang, 
-            speed: '0.4', 
-            client: 'lr-language-tts', 
-            use_google_only_voices: 1
-        }).toString();
+
+            queryString = new URLSearchParams({
+                text: exactWord,
+                enc: 'mpeg',
+                lang: context.lang,
+                speed: '0.4',
+                client: 'lr-language-tts',
+                use_google_only_voices: 1
+            }).toString();
 
         audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
     }
@@ -70,18 +70,18 @@ function extractMeaning (document, context) {
     return { word: word, meaning: meaning, audioSrc: audioSrc };
 };
 
-function saveWord (content) {
+function saveWord(content) {
     let word = content.word,
         meaning = content.meaning,
-      
+
         storageItem = browser.storage.local.get('definitions');
 
-        storageItem.then((results) => {
-            let definitions = results.definitions || {};
+    storageItem.then((results) => {
+        let definitions = results.definitions || {};
 
-            definitions[word] = meaning;
-            browser.storage.local.set({
-                definitions
-            });
-        })
+        definitions[word] = meaning;
+        browser.storage.local.set({
+            definitions
+        });
+    })
 }
