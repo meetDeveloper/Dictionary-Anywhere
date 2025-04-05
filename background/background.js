@@ -1,87 +1,75 @@
-const GOOGLE_SPEECH_URI = 'https://www.google.com/speech-api/v1/synthesize',
-
+const DICTIONARY_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/',
     DEFAULT_HISTORY_SETTING = {
         enabled: true
     };
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const { word, lang } = request, 
-        url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
-    
-    fetch(url, { 
+    const { word } = request,
+        url = `${DICTIONARY_API_URL}${word}`;
+
+    fetch(url, {
             method: 'GET',
             credentials: 'omit'
         })
-        .then((response) => response.text())
-        .then((text) => {
-            const document = new DOMParser().parseFromString(text, 'text/html'),
-                content = extractMeaning(document, { word, lang });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Word not found");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const content = extractMeaning(data, word);
 
             sendResponse({ content });
 
             content && browser.storage.local.get().then((results) => {
                 let history = results.history || DEFAULT_HISTORY_SETTING;
-        
-                history.enabled && saveWord(content)
+
+                history.enabled && saveWord(content);
             });
         })
+        .catch((error) => {
+            console.error("Error fetching definition:", error);
+            sendResponse({ content: null });
+        });
 
-    return true;
+    return true; // Keep the message channel open for async response.
 });
 
-function extractMeaning (document, context) {
-    if (!document.querySelector("[data-dobid='hdw']")) { return null; }
-    
-    var word = document.querySelector("[data-dobid='hdw']").textContent,
-        definitionDiv = document.querySelector("div[data-dobid='dfn']"),
-        meaning = "";
-
-    if (definitionDiv) {
-        definitionDiv.querySelectorAll("span").forEach(function(span){
-            if(!span.querySelector("sup"))
-                 meaning = meaning + span.textContent;
-        });
+function extractMeaning(data, word) {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+        return null;
     }
 
-    meaning = meaning[0].toUpperCase() + meaning.substring(1);
+    const meanings = data[0].meanings;
+    let definition = "";
 
-    var audio = document.querySelector("audio[jsname='QInZvb']"),
-        source = document.querySelector("audio[jsname='QInZvb'] source"),
-        audioSrc = source && source.getAttribute('src');
+    // Extract the first definition from the meanings array
+    if (meanings && meanings.length > 0) {
+        const firstMeaning = meanings[0];
+        const definitions = firstMeaning.definitions;
 
-    if (audioSrc) {
-        !audioSrc.includes("http") && (audioSrc = audioSrc.replace("//", "https://"));
-    }
-    else if (audio) {
-        let exactWord = word.replace(/·/g, ''), // We do not want syllable seperator to be present.
-            
-        queryString = new URLSearchParams({
-            text: exactWord, 
-            enc: 'mpeg', 
-            lang: context.lang, 
-            speed: '0.4', 
-            client: 'lr-language-tts', 
-            use_google_only_voices: 1
-        }).toString();
-
-        audioSrc = `${GOOGLE_SPEECH_URI}?${queryString}`;
+        if (definitions && definitions.length > 0) {
+            definition = definitions[0].definition;
+        }
     }
 
-    return { word: word, meaning: meaning, audioSrc: audioSrc };
-};
+    const phonetic = data[0].phonetics?.[0]?.text || null;
+    const audioSrc = data[0].phonetics?.[0]?.audio || null;
 
-function saveWord (content) {
+    return { word, meaning: definition, phonetic, audioSrc };
+}
+
+function saveWord(content) {
     let word = content.word,
-        meaning = content.meaning,
-      
-        storageItem = browser.storage.local.get('definitions');
+        meaning = content.meaning;
 
-        storageItem.then((results) => {
-            let definitions = results.definitions || {};
+    browser.storage.local.get('definitions').then((results) => {
+        let definitions = results.definitions || {};
 
-            definitions[word] = meaning;
-            browser.storage.local.set({
-                definitions
-            });
-        })
+        definitions[word] = meaning;
+        browser.storage.local.set({
+            definitions
+        });
+    });
 }
