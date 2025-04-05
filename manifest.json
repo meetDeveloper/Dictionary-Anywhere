@@ -3,7 +3,7 @@
 
   "manifest_version": 2,
   "name": "Dictionary Anywhere",
-  "version": "1.1.0",
+  "version": "1.1.1",
 
   "description": "View definitions easily as you browse the web. Double-click any word to view its definition in a small pop-up bubble.",
 
@@ -40,6 +40,6 @@
 
   "permissions": [
     "storage",
-    "https://www.google.com/"
+    "https://api.dictionaryapi.dev/api/v2/entries/en/"
   ]
 }
