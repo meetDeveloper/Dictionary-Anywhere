@@ -9,8 +9,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         url = `https://www.google.com/search?hl=${lang}&q=define+${word}&gl=US`;
     
     fetch(url, { 
-            method: 'GET',
-            credentials: 'omit'
+            method: 'GET'
         })
         .then((response) => response.text())
         .then((text) => {
